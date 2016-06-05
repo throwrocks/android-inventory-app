@@ -18,6 +18,10 @@ import android.widget.Toast;
 
 import java.io.File;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
+
 /**
  * Created by josel on 6/5/2016.
  */
@@ -43,47 +47,106 @@ public class ItemDetailDataEntry extends AppCompatActivity {
         startActivityForResult(imageIntent, 0);
     }
 
-    public void updateItem(View view) {
-        EditText nameField = (EditText) view.findViewById(R.id.item_name);
-        EditText quantityField = (EditText) view.findViewById(R.id.item_quantity);
-        EditText priceField = (EditText) view.findViewById(R.id.item_price);
-        String name = nameField.getText().toString();
-        int quantity =  Integer.parseInt(quantityField.getText().toString());
-        float price = Float.parseFloat(priceField.getText().toString());
-        Item newItem = new Item();
-        newItem.setItem(name, quantity, price);
+    /**
+     * updateItem
+     * This method is attached to the Save button onClick attribute
+     * It grans all the new item's data, validates it, and saves it to the Real database
+     *
+     * @param view the DetailDataEntry Layout where the new item information is set in EditText Views
+     */
+    public void saveNewItemButton(View view) {
 
-    }
-
-    public void saveNewItem(View view){
         Context context = getApplicationContext();
-        CharSequence text = "Item Saved!";
+        CharSequence toastText;
         int duration = Toast.LENGTH_SHORT;
 
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+
+        String name = null;
+        Integer quantity = null;
+        Float price = null;
+
+        EditText nameField = (EditText) this.findViewById(R.id.item_name);
+        EditText quantityField = (EditText) this.findViewById(R.id.item_quantity);
+        EditText priceField = (EditText) this.findViewById(R.id.item_price);
+
+        Log.e(LOG_TAG, "nameField " + nameField);
+
+        if (nameField != null) {
+            name = nameField.getText().toString();
+        }
+        if (quantityField != null) {
+            String quantityString = quantityField.getText().toString();
+            if (!quantityString.isEmpty()) {
+                quantity = Integer.parseInt(quantityString);
+            }
+
+        }
+        if (priceField != null) {
+            String priceString = priceField.getText().toString();
+            if (!priceString.isEmpty()) {
+                price = Float.parseFloat(priceString);
+            }
+        }
+
+        if (name == null || name.isEmpty()) {
+            toastText = "Name is empty";
+            Toast toast = Toast.makeText(context, toastText, duration);
+            toast.show();
+        } else if (quantity == null) {
+            toastText = "Quantity is empty";
+            Toast toast = Toast.makeText(context, toastText, duration);
+            toast.show();
+        } else if (price == null) {
+            toastText = "Price is empty";
+            Toast toast = Toast.makeText(context, toastText, duration);
+            toast.show();
+        } else {
+            toastText = "Item Saved!";
+            Toast toast = Toast.makeText(context, toastText, duration);
+            toast.show();
+            
+            Item newItem = new Item();
+
+            RealmConfiguration realmConfig = new RealmConfiguration.Builder(context).build();
+            Realm.setDefaultConfiguration(realmConfig);
+            Realm realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
+
+            final RealmResults<Item> items = realm.where(Item.class).findAll();
+            int size = items.size();
+            // Increment index
+            int nextID = (size + 1);
+
+            newItem.newItem(nextID, name, quantity, price);
+            realm.copyToRealmOrUpdate(newItem);
+            realm.commitTransaction();
+
+            finish();
+
+        }
+
     }
 
-    public void cancelNewItem(View view){
-        exitByBackKey();
+
+    public void cancelNewItemButton(View view) {
+        cancelNewItem();
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            exitByBackKey();
+            cancelNewItem();
             //moveTaskToBack(false);
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
 
-    protected void exitByBackKey() {
+    protected void cancelNewItem() {
         AlertDialog alertbox = new AlertDialog.Builder(this)
                 .setMessage("Cancel the New Item?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     // do something when the button is clicked
                     public void onClick(DialogInterface arg0, int arg1) {
-
                         finish();
                         //close();
                     }
