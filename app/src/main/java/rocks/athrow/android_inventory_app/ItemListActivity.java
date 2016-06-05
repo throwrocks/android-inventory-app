@@ -46,13 +46,16 @@ public class ItemListActivity extends AppCompatActivity {
         toolbar.setTitle(getTitle());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        if ( fab != null ){
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(getApplicationContext(), ItemDetailDataEntry.class);
+                startActivity(intent);
+
             }
         });
+        }
 
         View recyclerView = findViewById(R.id.item_list);
         assert recyclerView != null;

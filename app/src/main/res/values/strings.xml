@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">android-inventory-app</string>
+    <string name="app_name">Inventory Appp</string>
     <string name="title_item_detail">Item Detail</string>
+    <string name="title_item_data_entry">New Item</string>
 </resources>
