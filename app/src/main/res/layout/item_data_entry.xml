@@ -156,6 +156,15 @@
                     android:onClick="uploadImage"
                     android:text="Upload Image" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/item_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
         </LinearLayout>
     </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>

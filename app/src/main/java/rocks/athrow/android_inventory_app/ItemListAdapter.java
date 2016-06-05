@@ -1,10 +1,14 @@
 package rocks.athrow.android_inventory_app;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -36,6 +40,8 @@ public class ItemListAdapter extends RealmRecyclerViewAdapter<Item, ItemListAdap
         Item item = getData().get(position);
         holder.data = item;
 
+
+
         // Get the data from the Item object
 
         String item_name = item.getName();
@@ -60,6 +66,7 @@ public class ItemListAdapter extends RealmRecyclerViewAdapter<Item, ItemListAdap
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
+        public LinearLayout item_row;
         public TextView item_id;
         public TextView item_name;
         public TextView item_qty;
@@ -68,13 +75,24 @@ public class ItemListAdapter extends RealmRecyclerViewAdapter<Item, ItemListAdap
 
         public MyViewHolder(View view) {
             super(view);
+            item_row = (LinearLayout) view.findViewById(R.id.item_row);
             item_id = (TextView) view.findViewById(R.id.item_id);
             item_name = (TextView) view.findViewById(R.id.item_name);
             item_qty = (TextView) view.findViewById(R.id.item_qty);
             item_price = (TextView) view.findViewById(R.id.item_price);
+
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(activity.getApplicationContext(), ItemDetailActivity.class);
+                    intent.putExtra("item_id", Integer.parseInt(item_id.getText().toString()));
+                    activity.startActivity(intent);
+
+                }
+            });
         }
 
     }
-
-
 }
