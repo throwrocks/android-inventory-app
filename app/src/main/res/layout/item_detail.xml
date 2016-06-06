@@ -4,17 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:weightSum="2"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/colorAccent"
         android:gravity="top"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
         android:paddingTop="8dp">
 
         <ImageView
@@ -28,18 +25,17 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:gravity="top"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:paddingBottom="16dp"
             android:paddingEnd="8dp"
             android:paddingStart="8dp"
-            android:paddingTop="16dp">
+            android:paddingTop="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -47,13 +43,16 @@
                 android:text="@string/item_detail_item_price"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="18sp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/item_detail_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="8dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -61,11 +60,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:paddingBottom="16dp"
             android:paddingEnd="8dp"
             android:paddingStart="8dp"
-            android:paddingTop="16dp">
+            android:paddingTop="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -73,16 +72,21 @@
                 android:text="@string/item_detail_item_qty"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="18sp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/item_detail_qty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="8dp"
+
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="18sp" />
         </LinearLayout>
+
 
     </LinearLayout>
 

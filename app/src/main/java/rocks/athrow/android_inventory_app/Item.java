@@ -17,17 +17,23 @@ public class Item extends RealmObject {
     private String name;
     private int quantity;
     private double price;
+    private String vendor_name;
+    private String vendor_email;
 
 
-    public void newItem(int id, String name, int quantity, float price) {
-        Log.e(LOG_TAG, "set item " + name);
+    public void newItem(int id, String name, int quantity, float price,
+                        String vendor_name, String vendor_email) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.price = price;
+        this.vendor_name = vendor_name;
+        this.vendor_email = vendor_email;
     }
 
-    public int getId(){ return this.id;}
+    public int getId() {
+        return this.id;
+    }
 
     public String getName() {
         return this.name;
@@ -39,5 +45,12 @@ public class Item extends RealmObject {
 
     public double getPrice() {
         return this.price;
+    }
+
+    public String getVendorName(){
+        return this.vendor_name;
+    }
+    public String getVendorEmail(){
+        return this.vendor_email;
     }
 }
