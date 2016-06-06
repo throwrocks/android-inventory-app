@@ -173,7 +173,7 @@ public class ItemDetailDataEntry extends AppCompatActivity {
             // Increment index
             int nextID = (size + 1);
 
-            newItem.newItem(nextID, name, quantity, price);
+            newItem.newItem(nextID, name, quantity, price, "", "");
             realm.copyToRealmOrUpdate(newItem);
             realm.commitTransaction();
 
