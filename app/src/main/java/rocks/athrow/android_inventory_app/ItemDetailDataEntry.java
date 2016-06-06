@@ -157,9 +157,6 @@ public class ItemDetailDataEntry extends AppCompatActivity {
             Bitmap bm = imageField.getDrawingCache();
 
 
-          saveToInternalStorage(bm);
-
-
             toastText = "Item Saved!";
             Toast toast = Toast.makeText(context, toastText, duration);
             toast.show();
@@ -180,18 +177,20 @@ public class ItemDetailDataEntry extends AppCompatActivity {
             realm.copyToRealmOrUpdate(newItem);
             realm.commitTransaction();
 
+            String filename = Integer.toString(nextID);
+            saveToInternalStorage(bm, filename);
             finish();
 
         }
 
     }
-    private String saveToInternalStorage(Bitmap bitmapImage){
+    private String saveToInternalStorage(Bitmap bitmapImage, String filename){
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
-        // path to /data/data/yourapp/app_data/imageDir
+
         File directory = cw.getFilesDir();
         Log.e(LOG_TAG, "nameField " + directory);
         // Create imageDir
-        File mypath=new File(directory,"profile.jpg");
+        File mypath=new File(directory, filename);
 
         FileOutputStream fos = null;
         try {

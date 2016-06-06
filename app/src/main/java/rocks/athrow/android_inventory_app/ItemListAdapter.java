@@ -88,6 +88,7 @@ public class ItemListAdapter extends RealmRecyclerViewAdapter<Item, ItemListAdap
 
                     Intent intent = new Intent(activity.getApplicationContext(), ItemDetailActivity.class);
                     intent.putExtra("item_id", Integer.parseInt(item_id.getText().toString()));
+                    intent.putExtra("item_name", item_name.getText());
                     activity.startActivity(intent);
 
                 }

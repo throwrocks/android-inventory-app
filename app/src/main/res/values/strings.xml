@@ -1,5 +1,23 @@
 <resources>
     <string name="app_name">Inventory Appp</string>
+    <!--Item List Headers-->
+    <string name="item_list_item_id">#</string>
+    <string name="item_list_item_name">Item</string>
+    <string name="item_list_item_qty">Qty</string>
+    <string name="item_list_item_price">Price</string>
+    <!--Item Detail-->
     <string name="title_item_detail">Item Detail</string>
+    <string name="item_detail_sell_icon_content_description">A credit card icon to initiate a sale</string>
+    <string name="item_detail_item_price">Price</string>
+    <string name="item_detail_item_qty">Quantity on Hand</string>
+    <!--Item Detail data Entry-->
     <string name="title_item_data_entry">New Item</string>
+    <string name="item_detail_data_entry_title">Create new Item</string>
+    <string name="item_detail_data_entry_cancel">Cancel</string>
+    <string name="item_detail_data_entry_save">Save</string>
+    <string name="item_detail_data_entry_item_name">Item Name</string>
+    <string name="item_detail_data_entry_item_qty">Quantity</string>
+    <string name="item_detail_data_entry_item_price">Price</string>
+    <string name="item_detail_data_entry_item_upload_image">Upload Image</string>
+    <string name="item_detail_data_entry_item_image_preview_content_description">A preview of the image to be uploaded</string>
 </resources>

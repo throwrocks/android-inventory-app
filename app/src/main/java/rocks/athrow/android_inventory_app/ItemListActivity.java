@@ -61,8 +61,9 @@ public class ItemListActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
-
+        if (toolbar != null) {
+            toolbar.setTitle(getTitle());
+        }
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         if (fab != null) {
             fab.setOnClickListener(new View.OnClickListener() {
@@ -98,8 +99,8 @@ public class ItemListActivity extends AppCompatActivity {
         final RealmResults<Item> items = realm.where(Item.class).findAll();
         realm.commitTransaction();
         int size = items.size();
-        Log.e(LOG_TAG,"size " + size);
-       if (size > 0) {
+        Log.e(LOG_TAG, "size " + size);
+        if (size > 0) {
             recyclerView.setAdapter(new ItemListAdapter(this, realm.where(Item.class).findAllAsync()));
             recyclerView.setHasFixedSize(true);
         }
