@@ -54,6 +54,7 @@ public class Item extends RealmObject {
     public String getVendorName(){
         return this.vendor_name;
     }
+
     public String getVendorEmail(){
         return this.vendor_email;
     }

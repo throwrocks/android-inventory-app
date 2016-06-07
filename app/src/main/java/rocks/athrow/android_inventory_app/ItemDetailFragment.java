@@ -6,11 +6,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import org.w3c.dom.Text;
+
 import java.io.File;
+import java.lang.reflect.Array;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -145,6 +152,7 @@ public class ItemDetailFragment extends Fragment {
         return rootView;
     }
 
+
     public void quantityAdd(int itemId, int itemQty) {
         modifyQuantityOnHand("add", itemId, itemQty);
     }
@@ -153,6 +161,13 @@ public class ItemDetailFragment extends Fragment {
         modifyQuantityOnHand("remove", itemId, itemQty);
     }
 
+    /**
+     * modifyQuantityOnHand
+     * This method is called from the button methods and from the sell method
+     * @param action add or remove
+     * @param itemId the id of the item being adjusted
+     * @param itemQty the qty to be added or removed
+     */
     public void modifyQuantityOnHand(String action, int itemId, int itemQty) {
 
 
@@ -190,6 +205,11 @@ public class ItemDetailFragment extends Fragment {
 
     }
 
+    /**
+     * updateQuantityView
+     * This methods handles updating the Quantity on Hand View
+     * @param newQty the new qty to be displayed
+     */
     private void updateQuantityView(String newQty) {
         if (rootView == null) {
             return;
@@ -199,34 +219,66 @@ public class ItemDetailFragment extends Fragment {
     }
 
 
+    /**
+     * sellItem
+     * This method is attached to the sell FAB button
+     * @param itemId the id of the item being sold
+     */
     public void sellItem(int itemId) {
-        sellItem();
+        sellTransaction(itemId);
     }
 
-
-    protected void sellItem() {
+    /**
+     * sellTransaction
+     * This method comples a sale transaction
+     * It validates that there is enough quantity to be sold, and adjusts the item's quantity if the
+     * sale is valid
+     * @param itemId the id of the item being sold
+     */
+    protected void sellTransaction(final int itemId) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.item_sell_dialog, null);
+
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder(getContext()).build();
+        Realm.setDefaultConfiguration(realmConfig);
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        final RealmResults<Item> items = realm.where(Item.class).equalTo("id", itemId).findAll();
+        final Item item = items.get(0);
+        realm.commitTransaction();
 
         AlertDialog alertbox = new AlertDialog.Builder(getActivity())
                 .setView(view)
                 .setMessage("New Sale")
                 .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-                    // do something when the button is clicked
+
                     public void onClick(DialogInterface arg0, int arg1) {
                         EditText sellQtyView = (EditText) view.findViewById(R.id.item_sale_qty);
-                        //TODO: Compare entered qty qith available qty, don't allow if the sale takes the qty below 0
-                        String sellQty = sellQtyView.getText().toString();
-                        Context context = getActivity().getApplicationContext();
-                        CharSequence text = "sell " + sellQty;
-                        int duration = Toast.LENGTH_SHORT;
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-                        //close();
+
+                        String sellQtyString = sellQtyView.getText().toString();
+                        int sellQty = Integer.parseInt(sellQtyString);
+                        int newQty = item.getQuantity() - sellQty;
+
+                        if (newQty < 0) {
+                            Context context = getContext().getApplicationContext();
+                            CharSequence text = "You don't have enough to sell.";
+                            int duration = Toast.LENGTH_SHORT;
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        } else {
+                            modifyQuantityOnHand("remove", itemId, sellQty);
+                            Context context = getActivity().getApplicationContext();
+                            CharSequence text = "Sold!";
+                            int duration = Toast.LENGTH_SHORT;
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                            //close();
+                        }
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    // do something when the button is clicked
                     public void onClick(DialogInterface arg0, int arg1) {
                     }
                 })
@@ -237,21 +289,85 @@ public class ItemDetailFragment extends Fragment {
 
     }
 
-    //TODO: Launch intent to email app
+    /**
+     * itemReorder
+     * This method handles creating an order request to the vendor
+     * @param itemId the id of the item being reordered
+     */
     public void itemReorder(int itemId) {
-        Context context = getActivity().getApplicationContext();
-        CharSequence text = "Reorder " + itemId;
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder(getContext()).build();
+        Realm.setDefaultConfiguration(realmConfig);
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        final RealmResults<Item> items = realm.where(Item.class).equalTo("id", itemId).findAll();
+        final Item item = items.get(0);
+        realm.commitTransaction();
+
+        String itemName = item.getName();
+        String vendorName = item.getVendorName();
+        String vendorEmail = item.getVendorEmail();
+
+        String[] recipients = {vendorEmail};
+        String message = "Hello " + vendorName + ", " +
+                "\n\n Need to reorder" +
+                "\n Item: " + itemName +
+                "\n Qty: " + " " +
+                "\n\n Thanks!";
+
+        String subject = "Need to reorder " + itemName;
+
+        composeEmail(recipients, subject, message);
     }
 
-    // TODO: Delete the record from the database
-    public void itemDelete(int itemId) {
-        Context context = getActivity().getApplicationContext();
-        CharSequence text = "Delete " + itemId;
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+    /**
+     * composeEmail
+     * This method launches an intent to open the email application with some information filled in
+     * @param recipients the email address that you're sending the email to
+     * @param subject the email subject
+     * @param message the email body
+     */
+    public void composeEmail(String[] recipients, String subject, String message) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_EMAIL, recipients);
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, message);
+
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
+    /**
+     * itemDelete
+     * This method deletes the item and finishes the Detail Activity
+     * @param itemId the item to be deleted from the database
+     */
+    public void itemDelete(final int itemId) {
+        AlertDialog alertbox = new AlertDialog.Builder(getActivity())
+                .setMessage("Delete Item")
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    // do something when the button is clicked
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        RealmConfiguration realmConfig = new RealmConfiguration.Builder(getContext()).build();
+                        Realm.setDefaultConfiguration(realmConfig);
+                        Realm realm = Realm.getDefaultInstance();
+                        realm.beginTransaction();
+                        final RealmResults<Item> items = realm.where(Item.class).equalTo("id", itemId).findAll();
+                        Item item = items.get(0);
+                        item.deleteFromRealm();
+                        realm.commitTransaction();
+                        getActivity().finish();
+                        //close();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    // do something when the button is clicked
+                    public void onClick(DialogInterface arg0, int arg1) {
+                    }
+                })
+                .show();
+
     }
 }

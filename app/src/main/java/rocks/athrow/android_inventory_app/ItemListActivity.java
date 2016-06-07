@@ -68,6 +68,12 @@ public class ItemListActivity extends AppCompatActivity {
             });
         }
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         View recyclerView = findViewById(R.id.item_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
