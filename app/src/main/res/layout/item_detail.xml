@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="top"
         android:orientation="horizontal"
@@ -165,18 +165,20 @@
             android:layout_height="wrap_content"
             android:paddingEnd="8dp"
             android:paddingStart="8dp"
-            android:text="Modify Quantity on Hand"
+            android:text="@string/item_detail_modify_qoh"
             android:textColor="@color/colorSecondaryText"
             android:textSize="14sp"
             android:textStyle="bold" />
 
         <Button
             android:layout_width="75dp"
+            android:id="@+id/item_quantity_remove"
             android:layout_height="wrap_content"
             android:text="@string/item_detail_quantity_remove" />
 
         <Button
             android:layout_width="75dp"
+            android:id="@+id/item_quantity_add"
             android:layout_height="wrap_content"
             android:text="@string/item_detail_quantity_add" />
 
@@ -198,7 +200,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_alignParentStart="true"
-            android:text="@string/item_detail_delete" />
+            android:text="@string/item_detail_delete"
+           />
 
         <Button
             android:id="@+id/item_detail_reorder"

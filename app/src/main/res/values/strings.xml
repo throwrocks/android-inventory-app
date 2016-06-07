@@ -12,6 +12,7 @@
     <string name="item_detail_item_qty">Quantity on Hand</string>
     <string name="item_detail_vendor_name">Vendor Name</string>
     <string name="item_detail_vendor_email">Vendor Email</string>
+    <string name="item_detail_modify_qoh">Modify Quantity on Hand</string>
     <string name="item_detail_quantity_add">+</string>
     <string name="item_detail_quantity_remove">-</string>
     <string name="item_detail_reorder">Reorder</string>
