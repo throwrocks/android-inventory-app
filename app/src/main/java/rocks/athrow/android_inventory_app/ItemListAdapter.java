@@ -45,7 +45,7 @@ public class ItemListAdapter extends RealmRecyclerViewAdapter<Item, ItemListAdap
         String item_qty = Integer.toString(item_qty_int);
 
 
-        double item_price_double= item.getPrice();
+        double item_price_double = item.getPrice();
         NumberFormat defaultFormat = NumberFormat.getCurrencyInstance();
         String item_price = defaultFormat.format(item_price_double);
 

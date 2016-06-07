@@ -61,7 +61,6 @@ public class ItemDetailFragment extends Fragment {
 
 
         Item item = items.get(0);
-        String itemName = item.getName();
         double price = item.getPrice();
         NumberFormat defaultFormat = NumberFormat.getCurrencyInstance();
         itemPrice = defaultFormat.format(price);
@@ -156,8 +155,9 @@ public class ItemDetailFragment extends Fragment {
     /**
      * modifyQuantityOnHand
      * This method is called from the button methods and from the sell method
-     * @param action add or remove
-     * @param itemId the id of the item being adjusted
+     *
+     * @param action  add or remove
+     * @param itemId  the id of the item being adjusted
      * @param itemQty the qty to be added or removed
      */
     private void modifyQuantityOnHand(String action, int itemId, int itemQty) {
@@ -182,7 +182,7 @@ public class ItemDetailFragment extends Fragment {
                 break;
             case "remove":
                 newQty = item.getQuantity() - itemQty;
-                if ( newQty <= 0){
+                if (newQty <= 0) {
                     newQty = 0;
                 }
                 item.setQuantity(newQty);
@@ -200,6 +200,7 @@ public class ItemDetailFragment extends Fragment {
     /**
      * updateQuantityView
      * This methods handles updating the Quantity on Hand View
+     *
      * @param newQty the new qty to be displayed
      */
     private void updateQuantityView(String newQty) {
@@ -214,6 +215,7 @@ public class ItemDetailFragment extends Fragment {
     /**
      * sellItem
      * This method is attached to the sell FAB button
+     *
      * @param itemId the id of the item being sold
      */
     private void sellItem(int itemId) {
@@ -225,6 +227,7 @@ public class ItemDetailFragment extends Fragment {
      * This method comples a sale transaction
      * It validates that there is enough quantity to be sold, and adjusts the item's quantity if the
      * sale is valid
+     *
      * @param itemId the id of the item being sold
      */
     private void sellTransaction(final int itemId) {
@@ -284,6 +287,7 @@ public class ItemDetailFragment extends Fragment {
     /**
      * itemReorder
      * This method handles creating an order request to the vendor
+     *
      * @param itemId the id of the item being reordered
      */
     private void itemReorder(int itemId) {
@@ -315,9 +319,10 @@ public class ItemDetailFragment extends Fragment {
     /**
      * composeEmail
      * This method launches an intent to open the email application with some information filled in
+     *
      * @param recipients the email address that you're sending the email to
-     * @param subject the email subject
-     * @param message the email body
+     * @param subject    the email subject
+     * @param message    the email body
      */
     private void composeEmail(String[] recipients, String subject, String message) {
         Intent intent = new Intent(Intent.ACTION_SENDTO);
@@ -334,6 +339,7 @@ public class ItemDetailFragment extends Fragment {
     /**
      * itemDelete
      * This method deletes the item and finishes the Detail Activity
+     *
      * @param itemId the item to be deleted from the database
      */
     private void itemDelete(final int itemId) {

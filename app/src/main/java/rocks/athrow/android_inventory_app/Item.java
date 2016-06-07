@@ -29,7 +29,7 @@ public class Item extends RealmObject {
         this.vendor_email = vendor_email;
     }
 
-    public void setQuantity(int quantity){
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -49,11 +49,11 @@ public class Item extends RealmObject {
         return this.price;
     }
 
-    public String getVendorName(){
+    public String getVendorName() {
         return this.vendor_name;
     }
 
-    public String getVendorEmail(){
+    public String getVendorEmail() {
         return this.vendor_email;
     }
 }

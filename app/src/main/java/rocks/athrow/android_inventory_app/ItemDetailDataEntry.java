@@ -81,7 +81,6 @@ public class ItemDetailDataEntry extends AppCompatActivity {
      * updateItem
      * This method is attached to the Save button onClick attribute
      * It grans all the new item's data, validates it, and saves it to the Real database
-     *
      */
     public void saveNewItemButton(View view) {
 
@@ -130,12 +129,12 @@ public class ItemDetailDataEntry extends AppCompatActivity {
             itemImage = imageField.getDrawingCache();
         }
 
-        Log.e(LOG_TAG, "data " + name );
-        Log.e(LOG_TAG, "data " + quantity );
-        Log.e(LOG_TAG, "data " + price );
-        Log.e(LOG_TAG, "data " + itemImage );
-        Log.e(LOG_TAG, "data " + vendorName );
-        Log.e(LOG_TAG, "data " + vendorEmail );
+        Log.e(LOG_TAG, "data " + name);
+        Log.e(LOG_TAG, "data " + quantity);
+        Log.e(LOG_TAG, "data " + price);
+        Log.e(LOG_TAG, "data " + itemImage);
+        Log.e(LOG_TAG, "data " + vendorName);
+        Log.e(LOG_TAG, "data " + vendorEmail);
 
 
         if (name == null || name.isEmpty()) {
