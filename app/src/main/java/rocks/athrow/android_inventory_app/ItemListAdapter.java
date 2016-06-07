@@ -40,8 +40,6 @@ public class ItemListAdapter extends RealmRecyclerViewAdapter<Item, ItemListAdap
         Item item = getData().get(position);
         holder.data = item;
 
-
-
         // Get the data from the Item object
 
         String item_name = item.getName();

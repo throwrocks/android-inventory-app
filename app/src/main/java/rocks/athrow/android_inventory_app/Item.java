@@ -31,6 +31,10 @@ public class Item extends RealmObject {
         this.vendor_email = vendor_email;
     }
 
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
+    }
+
     public int getId() {
         return this.id;
     }

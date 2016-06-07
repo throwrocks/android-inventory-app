@@ -40,8 +40,6 @@ public class ItemDetailActivity extends AppCompatActivity {
             actionBar.setTitle(itemName);
         }
 
-
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         if (fab != null) {
             fab.setOnClickListener(new View.OnClickListener() {
@@ -52,8 +50,6 @@ public class ItemDetailActivity extends AppCompatActivity {
                 }
             });
         }
-
-
 
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
