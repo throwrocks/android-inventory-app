@@ -17,6 +17,7 @@
     <string name="item_detail_quantity_remove">-</string>
     <string name="item_detail_reorder">Reorder</string>
     <string name="item_detail_delete">Delete Item</string>
+    <string name="item_detail_sell_label">Enter the Sale Quantity:</string>
     <!--Item Detail data Entry-->
     <string name="title_item_data_entry">New Item</string>
     <string name="item_detail_data_entry_title">Create new Item</string>

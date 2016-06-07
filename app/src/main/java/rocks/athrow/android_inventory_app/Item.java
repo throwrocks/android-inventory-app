@@ -1,16 +1,14 @@
 package rocks.athrow.android_inventory_app;
 
-import android.util.Log;
-
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * Created by josel on 6/5/2016.
+ * Item
+ * A custom class of Items based on RealmObjects
  */
 public class Item extends RealmObject {
     private static final String LOG_TAG = Item.class.getSimpleName();
-    public static final String ITEM = "item";
 
     @PrimaryKey
     private int id;

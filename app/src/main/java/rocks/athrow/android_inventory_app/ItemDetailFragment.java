@@ -24,13 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import org.w3c.dom.Text;
-
 import java.io.File;
-import java.lang.reflect.Array;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -42,11 +37,8 @@ public class ItemDetailFragment extends Fragment {
     private static final String LOG_TAG = ItemListAdapter.class.getSimpleName();
     public static final String ARG_ITEM_ID = "item_id";
     private View rootView;
-    Item item;
     private int itemId;
-    private String itemName;
     private String itemPrice;
-    private int itemQty;
     private String itemQtyString;
     private String itemVendorName;
     private String itemVendorEmail;
@@ -68,12 +60,12 @@ public class ItemDetailFragment extends Fragment {
         realm.commitTransaction();
 
 
-        item = items.get(0);
-        itemName = item.getName();
+        Item item = items.get(0);
+        String itemName = item.getName();
         double price = item.getPrice();
         NumberFormat defaultFormat = NumberFormat.getCurrencyInstance();
         itemPrice = defaultFormat.format(price);
-        itemQty = item.getQuantity();
+        int itemQty = item.getQuantity();
         itemQtyString = Integer.toString(itemQty);
         itemVendorName = item.getVendorName();
         itemVendorEmail = item.getVendorEmail();
@@ -153,11 +145,11 @@ public class ItemDetailFragment extends Fragment {
     }
 
 
-    public void quantityAdd(int itemId, int itemQty) {
+    private void quantityAdd(int itemId, int itemQty) {
         modifyQuantityOnHand("add", itemId, itemQty);
     }
 
-    public void quantityRemove(int itemId, int itemQty) {
+    private void quantityRemove(int itemId, int itemQty) {
         modifyQuantityOnHand("remove", itemId, itemQty);
     }
 
@@ -168,7 +160,7 @@ public class ItemDetailFragment extends Fragment {
      * @param itemId the id of the item being adjusted
      * @param itemQty the qty to be added or removed
      */
-    public void modifyQuantityOnHand(String action, int itemId, int itemQty) {
+    private void modifyQuantityOnHand(String action, int itemId, int itemQty) {
 
 
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(getContext()).build();
@@ -224,7 +216,7 @@ public class ItemDetailFragment extends Fragment {
      * This method is attached to the sell FAB button
      * @param itemId the id of the item being sold
      */
-    public void sellItem(int itemId) {
+    private void sellItem(int itemId) {
         sellTransaction(itemId);
     }
 
@@ -235,7 +227,7 @@ public class ItemDetailFragment extends Fragment {
      * sale is valid
      * @param itemId the id of the item being sold
      */
-    protected void sellTransaction(final int itemId) {
+    private void sellTransaction(final int itemId) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.item_sell_dialog, null);
 
@@ -294,7 +286,7 @@ public class ItemDetailFragment extends Fragment {
      * This method handles creating an order request to the vendor
      * @param itemId the id of the item being reordered
      */
-    public void itemReorder(int itemId) {
+    private void itemReorder(int itemId) {
 
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(getContext()).build();
         Realm.setDefaultConfiguration(realmConfig);
@@ -327,7 +319,7 @@ public class ItemDetailFragment extends Fragment {
      * @param subject the email subject
      * @param message the email body
      */
-    public void composeEmail(String[] recipients, String subject, String message) {
+    private void composeEmail(String[] recipients, String subject, String message) {
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:")); // only email apps should handle this
         intent.putExtra(Intent.EXTRA_EMAIL, recipients);
@@ -344,7 +336,7 @@ public class ItemDetailFragment extends Fragment {
      * This method deletes the item and finishes the Detail Activity
      * @param itemId the item to be deleted from the database
      */
-    public void itemDelete(final int itemId) {
+    private void itemDelete(final int itemId) {
         AlertDialog alertbox = new AlertDialog.Builder(getActivity())
                 .setMessage("Delete Item")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {

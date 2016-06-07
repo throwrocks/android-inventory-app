@@ -28,28 +28,12 @@ import io.realm.RealmResults;
  */
 public class ItemListActivity extends AppCompatActivity {
     private static final String LOG_TAG = ItemListActivity.class.getSimpleName();
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private boolean mTwoPane;
-    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
 
-        //Delete All Realm records
-        /*RealmConfiguration realmConfig = new RealmConfiguration.Builder(this).build();
-        Realm.setDefaultConfiguration(realmConfig);
-        realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-        realm.deleteAll();
-        final RealmResults<Item> items = realm.where(Item.class).findAll();
-        int size = items.size();
-        Log.e(LOG_TAG, "size " + size);
-        realm.commitTransaction();*/
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -78,13 +62,6 @@ public class ItemListActivity extends AppCompatActivity {
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
 
-        if (findViewById(R.id.item_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
-            mTwoPane = true;
-        }
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
@@ -92,7 +69,7 @@ public class ItemListActivity extends AppCompatActivity {
 
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(this).build();
         Realm.setDefaultConfiguration(realmConfig);
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         final RealmResults<Item> items = realm.where(Item.class).findAll();
         realm.commitTransaction();

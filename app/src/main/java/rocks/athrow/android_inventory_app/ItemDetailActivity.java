@@ -17,16 +17,13 @@ import android.view.MenuItem;
  * in a {@link ItemListActivity}.
  */
 public class ItemDetailActivity extends AppCompatActivity {
-    private int itemId;
-    private String itemName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
         Intent intent = getIntent();
-        itemId = intent.getIntExtra("item_id",0);
-        itemName = intent.getStringExtra("item_name");
+        String itemName = intent.getStringExtra("item_name");
 
         setContentView(R.layout.activity_item_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);

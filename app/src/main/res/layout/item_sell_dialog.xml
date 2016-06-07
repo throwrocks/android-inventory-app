@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="12dp"
-
     android:orientation="horizontal">
 
         <TextView
@@ -11,7 +10,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:labelFor="@+id/item_sale_qty"
-            android:text="Enter the Sale Quantity: " />
+            android:text="@string/item_detail_sell_label" />
 
         <EditText
             android:layout_marginEnd="12dp"

@@ -1,24 +1,18 @@
 package rocks.athrow.android_inventory_app;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.NumberFormat;
-import java.util.Locale;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
-/**
- * Created by josel on 6/5/2016.
- */
+
 public class ItemListAdapter extends RealmRecyclerViewAdapter<Item, ItemListAdapter.MyViewHolder> {
     private static final String LOG_TAG = ItemListAdapter.class.getSimpleName();
     private final ItemListActivity activity;
@@ -64,11 +58,11 @@ public class ItemListAdapter extends RealmRecyclerViewAdapter<Item, ItemListAdap
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public LinearLayout item_row;
-        public TextView item_id;
-        public TextView item_name;
-        public TextView item_qty;
-        public TextView item_price;
+        public final LinearLayout item_row;
+        public final TextView item_id;
+        public final TextView item_name;
+        public final TextView item_qty;
+        public final TextView item_price;
         public Item data;
 
         public MyViewHolder(View view) {

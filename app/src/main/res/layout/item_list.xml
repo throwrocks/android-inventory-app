@@ -61,4 +61,3 @@
         tools:listitem="@layout/item_list_content" />
 
 </LinearLayout>
-
