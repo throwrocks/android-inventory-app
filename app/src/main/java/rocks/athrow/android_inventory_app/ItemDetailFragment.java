@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.text.NumberFormat;
 
@@ -33,7 +35,8 @@ public class ItemDetailFragment extends Fragment {
     private String itemName;
     private String itemPrice;
     private String itemQty;
-
+    private String itemVendorName;
+    private String itemVendorEmail;
 
     public ItemDetailFragment() {
     }
@@ -59,6 +62,8 @@ public class ItemDetailFragment extends Fragment {
         itemPrice = defaultFormat.format(price);
         int qty = item.getQuantity();
         itemQty = Integer.toString(qty);
+        itemVendorName = item.getVendorName();
+        itemVendorEmail = item.getVendorEmail();
 
 
 
@@ -72,10 +77,15 @@ public class ItemDetailFragment extends Fragment {
         TextView itemPriceView = (TextView) rootView.findViewById(R.id.item_detail_price);
         TextView itemQtyView = (TextView) rootView.findViewById(R.id.item_detail_qty);
         ImageView itemImageView = (ImageView) rootView.findViewById(R.id.item_detail_image);
+        TextView itemVendorNameView = (TextView) rootView.findViewById(R.id.item_detail_vendor_name);
+        TextView itemVendorEmailView = (TextView) rootView.findViewById(R.id.item_detail_vendor_email);
 
         // Set the TextViews
         itemPriceView.setText(itemPrice);
         itemQtyView.setText(itemQty);
+        itemVendorNameView.setText(itemVendorName);
+        itemVendorEmailView.setText(itemVendorEmail);
+
 
         // Get the app's files directory
         ContextWrapper cw = new ContextWrapper(getActivity());

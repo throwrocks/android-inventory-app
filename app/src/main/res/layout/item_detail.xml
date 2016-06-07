@@ -23,7 +23,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="top"
         android:orientation="vertical">
@@ -40,11 +40,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
                 android:text="@string/item_detail_item_price"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="18sp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -69,25 +69,144 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
                 android:text="@string/item_detail_item_qty"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="18sp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/item_detail_qty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:paddingEnd="8dp"
                 android:paddingStart="8dp"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="16dp"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="@string/item_detail_vendor_name"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/item_detail_vendor_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="16dp"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="@string/item_detail_vendor_email"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/item_detail_vendor_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="18sp" />
+
         </LinearLayout>
 
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorDividerLight"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:text="Modify Quantity on Hand"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:text="@string/item_detail_quantity_remove" />
+
+        <Button
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:text="@string/item_detail_quantity_add" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="32dp"
+        android:paddingBottom="8dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp">
+
+        <Button
+            android:id="@+id/item_detail_delete"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_alignParentStart="true"
+            android:text="@string/item_detail_delete" />
+
+        <Button
+            android:id="@+id/item_detail_reorder"
+            android:layout_alignParentEnd="true"
+            android:layout_alignEnd="@id/detail_toolbar"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/item_detail_reorder" />
+    </RelativeLayout>
 </LinearLayout>

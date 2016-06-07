@@ -10,14 +10,22 @@
     <string name="item_detail_sell_icon_content_description">A credit card icon to initiate a sale</string>
     <string name="item_detail_item_price">Price</string>
     <string name="item_detail_item_qty">Quantity on Hand</string>
+    <string name="item_detail_vendor_name">Vendor Name</string>
+    <string name="item_detail_vendor_email">Vendor Email</string>
+    <string name="item_detail_quantity_add">+</string>
+    <string name="item_detail_quantity_remove">-</string>
+    <string name="item_detail_reorder">Reorder</string>
+    <string name="item_detail_delete">Delete Item</string>
     <!--Item Detail data Entry-->
     <string name="title_item_data_entry">New Item</string>
     <string name="item_detail_data_entry_title">Create new Item</string>
     <string name="item_detail_data_entry_cancel">Cancel</string>
     <string name="item_detail_data_entry_save">Save</string>
     <string name="item_detail_data_entry_item_name">Item Name</string>
-    <string name="item_detail_data_entry_item_qty">Quantity</string>
+    <string name="item_detail_data_entry_item_qty">Quantity on Hand</string>
     <string name="item_detail_data_entry_item_price">Price</string>
     <string name="item_detail_data_entry_item_upload_image">Upload Image</string>
+    <string name="item_detail_data_entry_item_vendor_name">Vendor Name</string>
+    <string name="item_detail_data_entry_item_vendor_email">Vendor Email</string>
     <string name="item_detail_data_entry_item_image_preview_content_description">A preview of the image to be uploaded</string>
 </resources>

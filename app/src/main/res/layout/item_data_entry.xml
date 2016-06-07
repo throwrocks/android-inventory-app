@@ -80,18 +80,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="12dp"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="75dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
                 android:labelFor="@+id/item_name"
                 android:text="@string/item_detail_data_entry_item_name" />
 
             <EditText
                 android:id="@+id/item_name"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text" />
         </LinearLayout>
@@ -100,18 +101,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="12dp"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="75dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
                 android:labelFor="@+id/item_quantity"
                 android:text="@string/item_detail_data_entry_item_qty" />
 
             <EditText
                 android:id="@+id/item_quantity"
-                android:layout_width="200dp"
+                android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:inputType="number" />
         </LinearLayout>
@@ -119,32 +122,81 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="12dp"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="75dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+
                 android:labelFor="@+id/item_price"
                 android:text="@string/item_detail_data_entry_item_price" />
 
             <EditText
                 android:id="@+id/item_price"
-                android:layout_width="200dp"
+                android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="12dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/item_vendor_name"
+                android:text="@string/item_detail_data_entry_item_vendor_name" />
+
+            <EditText
+                android:id="@+id/item_vendor_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="12dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/item_vendor_email"
+                android:text="@string/item_detail_data_entry_item_vendor_email" />
+
+            <EditText
+                android:id="@+id/item_vendor_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress" />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center">
+
             <ImageView
                 android:id="@+id/item_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/item_detail_data_entry_item_image_preview_content_description" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -154,6 +206,7 @@
             android:orientation="horizontal"
             android:paddingBottom="12dp"
             android:paddingTop="12dp">
+
             <Button
                 android:id="@+id/upload_image"
                 android:layout_width="wrap_content"

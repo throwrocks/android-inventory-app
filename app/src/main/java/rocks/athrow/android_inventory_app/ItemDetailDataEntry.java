@@ -41,15 +41,12 @@ import io.realm.RealmResults;
 public class ItemDetailDataEntry extends AppCompatActivity {
     private static final String LOG_TAG = ItemDetailDataEntry.class.getSimpleName();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e(LOG_TAG, "onCreate" + true);
         setContentView(R.layout.item_data_entry);
     }
-
-
 
     public void uploadImage(View view) {
 
@@ -60,7 +57,7 @@ public class ItemDetailDataEntry extends AppCompatActivity {
         pickIntent.setType("image/*");
 
         Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
 
         startActivityForResult(chooserIntent, 1000);
 
@@ -83,7 +80,9 @@ public class ItemDetailDataEntry extends AppCompatActivity {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 ImageView imageView = (ImageView) findViewById(R.id.item_image);
-                imageView.setImageBitmap(bitmap);
+                if (imageView != null) {
+                    imageView.setImageBitmap(bitmap);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -107,13 +106,19 @@ public class ItemDetailDataEntry extends AppCompatActivity {
         String name = null;
         Integer quantity = null;
         Float price = null;
+        String vendorName = null;
+        String vendorEmail = null;
+        Bitmap itemImage = null;
 
         EditText nameField = (EditText) this.findViewById(R.id.item_name);
         EditText quantityField = (EditText) this.findViewById(R.id.item_quantity);
         EditText priceField = (EditText) this.findViewById(R.id.item_price);
         ImageView imageField = (ImageView) this.findViewById(R.id.item_image);
+        EditText vendorNameField = (EditText) this.findViewById(R.id.item_vendor_name);
+        EditText vendorEmailField = (EditText) this.findViewById(R.id.item_vendor_email);
 
-        Log.e(LOG_TAG, "nameField " + nameField);
+
+
 
         if (nameField != null) {
             name = nameField.getText().toString();
@@ -123,7 +128,6 @@ public class ItemDetailDataEntry extends AppCompatActivity {
             if (!quantityString.isEmpty()) {
                 quantity = Integer.parseInt(quantityString);
             }
-
         }
         if (priceField != null) {
             String priceString = priceField.getText().toString();
@@ -131,6 +135,24 @@ public class ItemDetailDataEntry extends AppCompatActivity {
                 price = Float.parseFloat(priceString);
             }
         }
+        if (vendorNameField != null) {
+            vendorName = vendorNameField.getText().toString();
+        }
+        if (vendorEmailField != null) {
+            vendorEmail = vendorEmailField.getText().toString();
+        }
+        if (imageField != null) {
+            imageField.buildDrawingCache();
+            itemImage = imageField.getDrawingCache();
+        }
+
+        Log.e(LOG_TAG, "data " + name );
+        Log.e(LOG_TAG, "data " + quantity );
+        Log.e(LOG_TAG, "data " + price );
+        Log.e(LOG_TAG, "data " + itemImage );
+        Log.e(LOG_TAG, "data " + vendorName );
+        Log.e(LOG_TAG, "data " + vendorEmail );
+
 
         if (name == null || name.isEmpty()) {
             toastText = "Name is empty";
@@ -145,22 +167,21 @@ public class ItemDetailDataEntry extends AppCompatActivity {
             Toast toast = Toast.makeText(context, toastText, duration);
             toast.show();
 
-        }  else if (imageField == null) {
-            toastText = "Price is empty";
+        } else if (itemImage == null) {
+            toastText = "Image is empty";
             Toast toast = Toast.makeText(context, toastText, duration);
             toast.show();
-        }
-            else {
-
-
-            imageField.buildDrawingCache();
-            Bitmap bm = imageField.getDrawingCache();
-
-
-            toastText = "Item Saved!";
+        } else if (vendorName == null) {
+            toastText = "Vendor Name is empty";
             Toast toast = Toast.makeText(context, toastText, duration);
             toast.show();
-            
+        } else if (vendorEmail == null) {
+            toastText = "Vendor Email is empty";
+            Toast toast = Toast.makeText(context, toastText, duration);
+            toast.show();
+        } else {
+
+
             Item newItem = new Item();
 
             RealmConfiguration realmConfig = new RealmConfiguration.Builder(context).build();
@@ -173,24 +194,30 @@ public class ItemDetailDataEntry extends AppCompatActivity {
             // Increment index
             int nextID = (size + 1);
 
-            newItem.newItem(nextID, name, quantity, price, "", "");
+            newItem.newItem(nextID, name, quantity, price, vendorName, vendorEmail);
             realm.copyToRealmOrUpdate(newItem);
             realm.commitTransaction();
 
             String filename = Integer.toString(nextID);
-            saveToInternalStorage(bm, filename);
+            saveToInternalStorage(itemImage, filename);
+
+            toastText = "Item Saved!";
+            Toast toast = Toast.makeText(context, toastText, duration);
+            toast.show();
+
             finish();
 
         }
 
     }
-    private String saveToInternalStorage(Bitmap bitmapImage, String filename){
+
+    private String saveToInternalStorage(Bitmap bitmapImage, String filename) {
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
 
         File directory = cw.getFilesDir();
         Log.e(LOG_TAG, "nameField " + directory);
         // Create imageDir
-        File mypath=new File(directory, filename);
+        File mypath = new File(directory, filename);
 
         FileOutputStream fos = null;
         try {
