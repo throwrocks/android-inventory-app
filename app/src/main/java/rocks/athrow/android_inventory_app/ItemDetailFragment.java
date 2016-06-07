@@ -1,29 +1,23 @@
 package rocks.athrow.android_inventory_app;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +39,8 @@ public class ItemDetailFragment extends Fragment {
     private int itemId;
     private String itemName;
     private String itemPrice;
-    private String itemQty;
+    private int itemQty;
+    private String itemQtyString;
     private String itemVendorName;
     private String itemVendorEmail;
 
@@ -71,8 +66,8 @@ public class ItemDetailFragment extends Fragment {
         double price = item.getPrice();
         NumberFormat defaultFormat = NumberFormat.getCurrencyInstance();
         itemPrice = defaultFormat.format(price);
-        int qty = item.getQuantity();
-        itemQty = Integer.toString(qty);
+        itemQty = item.getQuantity();
+        itemQtyString = Integer.toString(itemQty);
         itemVendorName = item.getVendorName();
         itemVendorEmail = item.getVendorEmail();
 
@@ -100,7 +95,7 @@ public class ItemDetailFragment extends Fragment {
 
         // Set the TextViews
         itemPriceView.setText(itemPrice);
-        itemQtyView.setText(itemQty);
+        itemQtyView.setText(itemQtyString);
         itemVendorNameView.setText(itemVendorName);
         itemVendorEmailView.setText(itemVendorEmail);
 
@@ -125,13 +120,13 @@ public class ItemDetailFragment extends Fragment {
         itemQuantityAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                quantityAdd(itemId);
+                quantityAdd(itemId, 1);
             }
         });
         itemQuantityRemoveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                quantityRemove(itemId);
+                quantityRemove(itemId, 1);
             }
         });
         itemReorderButton.setOnClickListener(new View.OnClickListener() {
@@ -150,20 +145,16 @@ public class ItemDetailFragment extends Fragment {
         return rootView;
     }
 
-    public void quantityAdd(int itemId) {
-        modifyQuantityOnHand("add", itemId);
+    public void quantityAdd(int itemId, int itemQty) {
+        modifyQuantityOnHand("add", itemId, itemQty);
     }
 
-    public void quantityRemove(int itemId) {
-        modifyQuantityOnHand("remove", itemId);
+    public void quantityRemove(int itemId, int itemQty) {
+        modifyQuantityOnHand("remove", itemId, itemQty);
     }
 
-    public void modifyQuantityOnHand(String action, int itemId) {
+    public void modifyQuantityOnHand(String action, int itemId, int itemQty) {
 
-        Context context = getActivity().getApplicationContext();
-        CharSequence text;
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast;
 
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(getContext()).build();
         Realm.setDefaultConfiguration(realmConfig);
@@ -177,13 +168,16 @@ public class ItemDetailFragment extends Fragment {
 
         switch (action) {
             case "add":
-                newQty = item.getQuantity() + 1;
+                newQty = item.getQuantity() + itemQty;
                 item.setQuantity(newQty);
                 realm.commitTransaction();
                 updateQuantityView(Integer.toString(newQty));
                 break;
             case "remove":
-                newQty = item.getQuantity() - 1;
+                newQty = item.getQuantity() - itemQty;
+                if ( newQty <= 0){
+                    newQty = 0;
+                }
                 item.setQuantity(newQty);
                 realm.commitTransaction();
                 updateQuantityView(Integer.toString(newQty));
@@ -212,7 +206,7 @@ public class ItemDetailFragment extends Fragment {
 
     protected void sellItem() {
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.item_sell_dialog, null);
+        final View view = inflater.inflate(R.layout.item_sell_dialog, null);
 
         AlertDialog alertbox = new AlertDialog.Builder(getActivity())
                 .setView(view)
@@ -220,6 +214,14 @@ public class ItemDetailFragment extends Fragment {
                 .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                     // do something when the button is clicked
                     public void onClick(DialogInterface arg0, int arg1) {
+                        EditText sellQtyView = (EditText) view.findViewById(R.id.item_sale_qty);
+                        //TODO: Compare entered qty qith available qty, don't allow if the sale takes the qty below 0
+                        String sellQty = sellQtyView.getText().toString();
+                        Context context = getActivity().getApplicationContext();
+                        CharSequence text = "sell " + sellQty;
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
                         //close();
                     }
                 })
@@ -235,6 +237,7 @@ public class ItemDetailFragment extends Fragment {
 
     }
 
+    //TODO: Launch intent to email app
     public void itemReorder(int itemId) {
         Context context = getActivity().getApplicationContext();
         CharSequence text = "Reorder " + itemId;
@@ -243,6 +246,7 @@ public class ItemDetailFragment extends Fragment {
         toast.show();
     }
 
+    // TODO: Delete the record from the database
     public void itemDelete(int itemId) {
         Context context = getActivity().getApplicationContext();
         CharSequence text = "Delete " + itemId;
