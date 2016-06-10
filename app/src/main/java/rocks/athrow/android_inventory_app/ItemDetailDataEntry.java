@@ -5,6 +5,7 @@ import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -48,16 +49,6 @@ public class ItemDetailDataEntry extends AppCompatActivity {
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
 
         startActivityForResult(chooserIntent, 1000);
-
-
-        // create Intent to take a picture and return control to the calling application
-        /*Intent imageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File imagesFolder = new File(Environment.getDataDirectory(), "InventoryAppItems");
-        imagesFolder.mkdirs(); // <----
-        File image = new File(imagesFolder, "image_001.jpg");
-        Uri uriSavedImage = Uri.fromFile(image);
-        imageIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
-        startActivityForResult(imageIntent, 0);*/
     }
 
     @Override
@@ -100,6 +91,8 @@ public class ItemDetailDataEntry extends AppCompatActivity {
         EditText quantityField = (EditText) this.findViewById(R.id.item_quantity);
         EditText priceField = (EditText) this.findViewById(R.id.item_price);
         ImageView imageField = (ImageView) this.findViewById(R.id.item_image);
+        boolean x = imageField == null;
+        Log.e(LOG_TAG, "image field? " + x );
         EditText vendorNameField = (EditText) this.findViewById(R.id.item_vendor_name);
         EditText vendorEmailField = (EditText) this.findViewById(R.id.item_vendor_email);
 
@@ -125,16 +118,14 @@ public class ItemDetailDataEntry extends AppCompatActivity {
             vendorEmail = vendorEmailField.getText().toString();
         }
         if (imageField != null) {
-            imageField.buildDrawingCache();
-            itemImage = imageField.getDrawingCache();
-        }
 
-        Log.e(LOG_TAG, "data " + name);
-        Log.e(LOG_TAG, "data " + quantity);
-        Log.e(LOG_TAG, "data " + price);
-        Log.e(LOG_TAG, "data " + itemImage);
-        Log.e(LOG_TAG, "data " + vendorName);
-        Log.e(LOG_TAG, "data " + vendorEmail);
+            imageField.setDrawingCacheEnabled(true);
+
+            BitmapDrawable drawable = (BitmapDrawable)imageField.getDrawable();
+            itemImage = drawable.getBitmap();
+
+            imageField.setDrawingCacheEnabled(false);
+        }
 
 
         if (name == null || name.isEmpty()) {
@@ -198,8 +189,7 @@ public class ItemDetailDataEntry extends AppCompatActivity {
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
 
         File directory = cw.getFilesDir();
-        Log.e(LOG_TAG, "nameField " + directory);
-        // Create imageDir
+        // Create image directory
         File mypath = new File(directory, filename);
 
         FileOutputStream fos;
