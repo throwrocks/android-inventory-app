@@ -13,6 +13,6 @@ I also implemented a RecyclerView.Adapter to bind the Realm data to the item's l
 
 You can see some screenshots below.
 
-![ScreenShot](http://throw.rocks/android-projects/inventory-app/inventory-app-list.png)
-![ScreenShot](http://throw.rocks/android-projects/inventory-app/inventory-app-data-entry.png)
-![ScreenShot](http://throw.rocks/android-projects/inventory-app/inventory-app-detail.png)
+![ScreenShot](https://github.com/throwrocks/android-project-images/blob/master/inventory-app/inventory-app-list.png)
+![ScreenShot](https://github.com/throwrocks/android-project-images/blob/master/inventory-app/inventory-app-data-entry.png)
+![ScreenShot](https://github.com/throwrocks/android-project-images/blob/master/inventory-app/inventory-app-detail.png)
